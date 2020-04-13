@@ -52,9 +52,9 @@ def write_output_csv(file, data):
     :data: the sunny hours dict that should be written out
     """
     with open(file, "w") as f:
-        f.write("Datum;Sunny Hours;\n")
+        f.write("Datum;Sunny Hours\n")
         for key, value in data.items():
-            f.write(key + ";" + "{:f}".format(value) + ";\n")
+            f.write(key + ";" + "{:f}".format(value) + "\n")
 
 
 if __name__ == "__main__":
