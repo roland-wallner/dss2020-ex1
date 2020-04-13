@@ -68,4 +68,4 @@ python plot.py data/rodaun_2020_01.csv data/rodaun_2020_02.csv data/rodaun_2020_
 
 Results:
 
-TODO import image from docs
+![Rodaun sunny hours per day](docs/result_graph.png)
