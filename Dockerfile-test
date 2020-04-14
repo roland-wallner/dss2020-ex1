@@ -1,0 +1,21 @@
+FROM python:3.8-slim
+
+RUN mkdir /app
+WORKDIR /app
+
+RUN apt update -y && apt install -y git
+
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
+
+COPY analysis.py plot.py ./
+
+RUN mkdir data
+RUN cd data && git clone https://github.com/ralf-saenger/sonnenkollektordaten && cd sonnenkollektordaten && git checkout 2c13133776dec218fcd2d4c7999408d0a293f930
+
+RUN python3 analysis.py data/sonnenkollektordaten/E2020-01.csv "S1/2 - Solar" data/rodaun_2020_01.csv 50 300
+RUN python3 analysis.py data/sonnenkollektordaten/E2020-02.csv "S1/2 - Solar" data/rodaun_2020_02.csv 50 300
+RUN python3 analysis.py data/sonnenkollektordaten/E2020-03.csv "S1/2 - Solar" data/rodaun_2020_03.csv 50 300
+RUN python3 analysis.py data/sonnenkollektordaten/E2020-04.csv "S1/2 - Solar" data/rodaun_2020_04.csv 50 300
+
+RUN python3 plot.py data/rodaun_graph.png data/rodaun_2020_01.csv data/rodaun_2020_02.csv data/rodaun_2020_03.csv data/rodaun_2020_04.csv
