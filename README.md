@@ -44,16 +44,35 @@ To visualize the resulting data after the analysis is run, execute:
 python3 plot.py <file1> <file2> ... <file_n>
 ```
 
-## Testing
+## Testing (docker)
 
-For testing this algorithm a small dataset recorded in Vienna is used and can be found here.
+The whole testing procedure that is also provided in the next section is also available as an Dockerfile that creates the graph when the container is built.
+To get the output graph file you can execute:
+```
+docker build -t rodaun-sun-data-builder -f Dockerfile-test .
+docker run --rm --entrypoint cat rodaun-sun-data-builder /app/data/rodaun_graph.png > rodaun_graph.png
+```
+
+To get the generated data you can start the image with bash to extract them.
+```
+docker run --rm -it --entrypoint /bin/bash rodaun-sun-data-builder
+```
+
+## Testing (non-docker)
+
+For testing this algorithm a small dataset recorded in Vienna is used and can be found also on github.
+
+Link: https://github.com/ralf-saenger/sonnenkollektordaten/tree/2c13133776dec218fcd2d4c7999408d0a293f930
+
 Clone the data into test folder by executing:
 ```
 cd data
 git clone https://github.com/ralf-saenger/sonnenkollektordaten
+cd sonnenkollektordaten
+git checkout 2c13133776dec218fcd2d4c7999408d0a293f930
 ```
 
-To run the analysis run:
+To run the analysis run the following commands in the projects root folder:
 ```
 python3 analysis.py data/sonnenkollektordaten/E2020-01.csv "S1/2 - Solar" data/rodaun_2020_01.csv 50 300
 python3 analysis.py data/sonnenkollektordaten/E2020-02.csv "S1/2 - Solar" data/rodaun_2020_02.csv 50 300
@@ -63,9 +82,9 @@ python3 analysis.py data/sonnenkollektordaten/E2020-04.csv "S1/2 - Solar" data/r
 
 The resulting data can be displayed using:
 ```
-python plot.py data/rodaun_2020_01.csv data/rodaun_2020_02.csv data/rodaun_2020_03.csv data/rodaun_2020_04.csv
+python3 plot.py data/rodaun_graph.png data/rodaun_2020_01.csv data/rodaun_2020_02.csv data/rodaun_2020_03.csv data/rodaun_2020_04.csv
 ```
 
-Results:
+## Testing Results:
 
 ![Rodaun sunny hours per day](docs/result_graph.png)
